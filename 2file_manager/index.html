@@ -1,11 +1,52 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <script src="codebase/dhtmlx.js"></scirpt>
-    <link rel="stylesheet" type="text/css" href="codebase/dhtmlx.css"/>
+    <title>File Manager</title>
+    <script src="codebase/dhtmlx.js"></script>
+    <link rel="stylesheet" type="text/css" href="codebase/dhtmlx.css">
   </head>
   <body>
-    <script>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0px;
+      }
+    </style>
+    <script type="text/javascript">
+      dhtmlxEvent(window, "load", function(){
+        var myLayout = new dhtmlXLayoutObject(document.body, "2U");
+        myLayout.cells("a").setWidth(250);
+        myLayout.cells("a").setText("Files");
+        myLayout.cells("b").hideHeader();
+        var myToolbar = myLayout.attachToolbar();
+        myToolbar.setIconsPath("icons/");
+        myToolbar.loadStruct("data/toolbarStruct.xml");
 
+        var myTree = myLayout.cells("a").attachTree();
+        myTree.setImagesPath("codebase/imgs/dhxtree_terrace/");
+
+        var myGrid = myLayout.cells("b").attachGrid();
+        myGrid.setImagePath("codebase/imgs/");
+        myGrid.setIconsPath("icons/");
+        myGrid.setHeader("&nbsp;,Name,Type,Modified,id");
+        myGrid.setColTypes("img,ro,ro,ro,ro");
+        myGrid.setInitWidths("70,250,100,*,0");
+        myGrid.setColAlign("center,left,left,left");
+        myGrid.init();
+
+        myTree.attachEvent("onSelect", function(id){
+            myGrid.filterBy(4, id);
+            return true;
+        });
+
+        myTree.loadXML("data/treeStruct.xml", function(){
+            myGrid.load("data/gridData.xml", function(){
+                myTree.selectItem("books");
+            });
+        });
+      });
     </script>
   </body>
 </html>
