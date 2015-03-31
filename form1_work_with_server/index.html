@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dhtmlxForm. Server side</title>
+    <link rel="stylesheet" type="tex/css" href="codebase/dhtmlx.css">
+    <script type="text/javascript" src="codebase/dhtmlx.js"></script>
+  </head>
+  <body>
+    <div id="box" style="width:250px; height:160px; background-color:white;"></div>
+    <script type="text/javascript">
+      var formData = [
+        {type: "block", list: [
+          {type: "fieldset", label: "Customer details", width:267, list:[
+            {type: "input", name: "name",    label: "Name",    labelWidth: 50},
+            {type: "input", name: "address", label: "Address", labelWidth: 50},
+            {type: "input", name: "email",   label: "Email",   labelWidth: 50},
+            {type: "button",name: "save",    offsetTop: 10,    value: "Submit"}
+        ]}]},
+        {type: "block", list: [
+          {type: "button", name: "button1", value: "Customer 1", offsetTop: 10 },
+          {type: "newcolumn"},
+          {type: "button", name: "button2", value: "Customer 2", offsetTop: 10 }
+        ]}
+      ];
+
+      dhtmlxEvent(window, "load", function(){
+        var myForm = new dhtmlXForm("box", formData);
+      });
+    </script>
+  </body>
+</html>

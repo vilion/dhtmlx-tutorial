@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dhtmlxForm. Server side</title>
+    <link rel="stylesheet" type="tex/css" href="codebase/dhtmlx.css">
+    <script type="text/javascript" src="codebase/dhtmlx.js"></script>
+  </head>
+  <body>
+    <div id="mygrid_container" style="width:600px; height:160px; float:left;"></div>
+    <div id="myform_container" style="width:350px; height:160px;"></div>
+    <script type="text/javascript">
+      var formData = [
+          {type: "fieldset", offsetTop: 0, label: "Edit Form", width:253, list:[
+            {type: "input", name: "title",    label: "Name",     offsetTop: 13, labelWidth: 60},
+            {type: "input", name: "quantity", label: "Quantity", offsetTop: 7,  labelWidth: 60},
+            {type: "input", name: "price",    label: "Price",    offsetTop: 7,  labelWidth: 60},
+            {type: "button",name: "save",     value: "Submit",   offsetTop: 18}
+        ]},
+      ];
+
+      dhtmlxEvent(window, "load", function(){
+        var mygrid = new dhtmlXGridObject("mygrid_containter");
+        mygrid.setImagePath("codebase/imgs/");
+        mygrid.setHeader("Name,Quantity,Price");
+        mygrid.setColumnIds("fname,lname,email");
+        mygrid.init();
+        mygrid.load("griddata.php");  // 本当はあると思いねえ
+
+        var myForm = new dhtmlXForm("myform_container", formData);
+        myForm.bind(mygrid);
+        
+        var dp = dataProcessor("griddata.php");
+        dp.init(mygrid);
+
+        myForm.attachEvent("onButtonClick", function(id){
+          myform.save();
+        });
+      });
+    </script>
+  </body>
+</html>
